@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.sqlite3
+/venv/
+.env
+/media/
+/dirty/
+.scrapy/
+*.sql.gz
+*.xlsx
+*.json
+/pg_dump/
+!.gitkeep
+.idea
+/django_cache/
+.data
