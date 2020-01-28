@@ -1,0 +1,14 @@
+Django==2.2.4
+ipdb
+Werkzeug==0.12.2
+django-jet==1.0.8
+drf-yasg==1.12.1
+django-extensions==1.9.7
+django-debug-toolbar==1.9.1
+django-rest-auth
+django-location-field
+django-jet
+postgres==2.2.2
+psycopg2-binary==2.8.3
+djangorestframework==3.10.2
+django-environ
