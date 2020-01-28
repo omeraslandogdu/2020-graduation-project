@@ -16,6 +16,7 @@ __all__ = [
     'UserType',
 ]
 
+
 class ClientManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -60,9 +61,8 @@ class ClientManager(BaseUserManager):
 
 class UserToken(Token):
     class Meta(Token.Meta):
-        db_table = 'client_token'
+        db_table = 'user_token'
         abstract = False
-
 
 
 class User(AbstractBaseUser):

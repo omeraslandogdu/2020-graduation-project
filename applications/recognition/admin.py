@@ -2,11 +2,14 @@ from django.contrib import admin
 from applications.core.admin import RelatedObjectLinkMixin
 from applications.recognition.models.user import User, UserToken, UserType
 from django.contrib.auth.admin import UserAdmin
+from .forms import UserAdminChangeForm, UserAdminCreationForm
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 
 class BaseModelAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(BaseModelAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.admin:
             return qs.filter(deleted_at=None)
 
         return qs.filter(user=request.user.id)
@@ -19,14 +22,14 @@ class TokenAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(TokenAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.admin:
             return qs
 
         return qs.filter(id=request.user.id)
 
 
 @admin.register(User)
-# The forms to add and change user instances
+class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
 
@@ -51,10 +54,10 @@ class TokenAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
-    
+
     def get_queryset(self, request):
         qs = super(UserAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.admin:
             return qs
 
         return qs.filter(id=request.user.id)
