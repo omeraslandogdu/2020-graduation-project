@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/dev/app/Dockerfile
+    ports:
+      - "1881:1881"
+    expose:
+      - "1881"
+    links:
+      - db
+    volumes:
+      - .:/app
+    command: tail -f /dev/null
+
+  db:
+    image: mdillon/postgis:10
+    restart: always
+    expose:
+      - "5430"
+    environment:
+      POSTGRES_USER: facedetectionapi
+      POSTGRES_PASSWORD: facedetectionapi
+      POSTGRES_DB: facedetectionapi
+    ports:
+      - '5430:5432'
+    volumes:
+      - ./.data/dbpgdata:/var/lib/postgresql/data
