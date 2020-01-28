@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cp env.dev.example .env && \
+docker-compose up --build -d && \
+docker-compose exec -d app ./manage.py migrate
