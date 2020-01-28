@@ -10,10 +10,10 @@ __all__ = [
 class EntityType(BaseModel):
     title = models.CharField(max_length=255)
     key = models.CharField(max_length=255, db_index=True, )
-    client = models.ForeignKey('Client', models.DO_NOTHING)
+    user = models.ForeignKey('User', models.DO_NOTHING)
 
     class Meta:
-        unique_together = ['client', 'key']
+        unique_together = ['user', 'key']
         ordering = ['title']
 
     def __str__(self):
