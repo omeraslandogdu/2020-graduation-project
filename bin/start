@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+##### Main
+
+deamon=True
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -d | --no-deamon )    deamon=False
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+if [ "$deamon" = True  ]; then
+    docker-compose exec -d app ./manage.py runserver 0.0.0.0:1881
+else
+    ./manage.py runserver 0.0.0.0:1881
+fi
