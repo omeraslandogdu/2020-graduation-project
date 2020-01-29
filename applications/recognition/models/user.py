@@ -125,6 +125,7 @@ class UserType(BaseModel):
                                     help_text='Entity type id for user type.')
     user = models.ForeignKey(User, models.DO_NOTHING)
 
+
     class Meta:
         ordering = ['id']
 

@@ -6,6 +6,7 @@ from .forms import UserAdminChangeForm, UserAdminCreationForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
+
 class BaseModelAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(BaseModelAdmin, self).get_queryset(request)
@@ -22,10 +23,12 @@ class TokenAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(TokenAdmin, self).get_queryset(request)
+
         if request.user.admin:
             return qs
 
         return qs.filter(id=request.user.id)
+
 
 
 @admin.register(User)
@@ -63,6 +66,24 @@ class UserAdmin(BaseUserAdmin):
         return qs.filter(id=request.user.id)
 
 
+
+@admin.register(User)
+class UserAdmin(BaseModelAdmin):
+    list_display = (
+        'id',
+        '__str__',
+        'client',
+        'created_at',
+        'updated_at',
+        'status',
+    )
+    search_fields = ['fullname', 'email']
+    list_filter = (
+        'client',
+        'status',
+    )
+
+
 @admin.register(UserType)
 class UserTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
     list_display = (
@@ -70,6 +91,7 @@ class UserTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
         'title',
         'user',
         'entity_type_link',
+
         'created_at',
         'updated_at',
         'status',
