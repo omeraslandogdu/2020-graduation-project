@@ -71,6 +71,24 @@ class UserAdmin(BaseUserAdmin):
         return qs.filter(id=request.user.id)
 
 
+
+@admin.register(User)
+class UserAdmin(BaseModelAdmin):
+    list_display = (
+        'id',
+        '__str__',
+        'client',
+        'created_at',
+        'updated_at',
+        'status',
+    )
+    search_fields = ['fullname', 'email']
+    list_filter = (
+        'client',
+        'status',
+    )
+
+
 @admin.register(UserType)
 class UserTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
     list_display = (
