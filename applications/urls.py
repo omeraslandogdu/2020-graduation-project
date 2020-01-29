@@ -16,8 +16,34 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
+from django.contrib import admin
+from rest_framework import routers, permissions
+from django.conf import settings
+from django.conf.urls.static import static
+from applications.recognition.views import prediction
+
+
+
+router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('jet/', include('jet.urls')),  # Django JET URLS
-    url(r'^admin/', admin.site.urls),
+    # Core Admin
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    path('admin/', admin.site.urls),
+
+    url(r'prediction', prediction, name='school_image_upload_view')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]
+
+

@@ -91,7 +91,7 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'applications.recognition.authentication.ClientTokenAuthentication',
+        'applications.recognition.authentication.UserTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -164,7 +164,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 
-AUTH_USER_MODEL = "recognition.Client"
+AUTH_USER_MODEL = "recognition.User"
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
