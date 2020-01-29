@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-
+from .entity_type import EntityType
 from applications.core.models import BaseModel
 
 
@@ -71,9 +71,11 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    fullname = models.CharField(max_length=255)
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
+    entity_type = models.ForeignKey(EntityType, on_delete=models.DO_NOTHING)
     # notice the absence of a "Password field", that is built in.
 
 
@@ -124,7 +126,6 @@ class UserType(BaseModel):
     entity_type = models.ForeignKey('EntityType', models.DO_NOTHING, related_name='user_type',
                                     help_text='Entity type id for user type.')
     user = models.ForeignKey(User, models.DO_NOTHING)
-
 
     class Meta:
         ordering = ['id']

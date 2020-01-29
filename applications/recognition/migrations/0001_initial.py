@@ -5,7 +5,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
-
 class Migration(migrations.Migration):
 
     initial = True
@@ -54,7 +53,6 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True, null=True)),
                 ('status', models.IntegerField(choices=[(1, 'Active'), (0, 'Passive'), (-1, 'Deleted'), (2, 'Waiting')], default=1)),
                 ('title', models.CharField(help_text='Title of user type for related entity_type.', max_length=255)),
-
                 ('entity_type', models.ForeignKey(help_text='Entity type id for user type.', on_delete=django.db.models.deletion.DO_NOTHING, related_name='user_type', to='recognition.EntityType')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='recognition.User')),
             ],
@@ -64,7 +62,6 @@ class Migration(migrations.Migration):
         ),
         migrations.CreateModel(
             name='UserToken',
-
             fields=[
                 ('key', models.CharField(max_length=40, primary_key=True, serialize=False, verbose_name='Key')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
@@ -85,6 +82,5 @@ class Migration(migrations.Migration):
         migrations.AlterUniqueTogether(
             name='entitytype',
             unique_together={('user', 'key')},
-
         ),
     ]
