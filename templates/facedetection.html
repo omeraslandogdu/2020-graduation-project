@@ -1,54 +1,81 @@
 {% block content %}
-<html>
-<head>
-    <title>FaceRecognition</title>
-    <link href="/static/filepond.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="id_idType">ID Type</label>
-                    <select name="id_type" id="id_idType" class="form-control">
-                        <option value="default" selected>Default</option>
-                        <option value="origin">Origin</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="id_photo">Photo</label>
-                    <input type="file" name="photo" id="id_photo" multiple>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>2020 spring bitirme projesi</title>
+    </head>
+    <body>
+    <form>
+        {% csrf_token %}
+    </form>
+    <div>2020 Spring Bitirme projesi</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <script type="text/javascript">
+        // Classifier Variable
+      let classifier;
+      // Model URL
+      let imageModelURL = 'https://teachablemachine.withgoogle.com/models/HyMEER14/';
 
-</form>
+      // Video
+      let video;
+      let flippedVideo;
+      // To store the classification
+      let label = "";
 
-<script src="/static/filepond.js"></script>
-<script>
-    var inputElement = document.getElementById('id_photo');
+      // Load the model first
+      function preload() {
+        classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+      }
 
-    FilePond.create(inputElement, {
-        server: {
-            process: {
-                url: '/api/upload/',
-                ondata: (fd) => {
-                    fd.append('id_type', document.getElementById('id_idType').value);
+      function setup() {
+        createCanvas(320, 260);
+        // Create the video
+        video = createCapture(VIDEO);
+        video.size(320, 240);
+        video.hide();
 
-                    return fd;
-                }
-            }
+        flippedVideo = ml5.flipImage(video)
+        // Start classifying
+        classifyVideo();
+      }
+
+      function draw() {
+        background(0);
+        // Draw the video
+        image(flippedVideo, 0, 0);
+
+        // Draw the label
+        fill(255);
+        textSize(16);
+        textAlign(CENTER);
+        text(label, width / 2, height - 4);
+      }
+
+      // Get a prediction for the current video frame
+      function classifyVideo() {
+        flippedVideo = ml5.flipImage(video)
+        classifier.classify(flippedVideo, gotResult);
+      }
+
+      // When we get a result
+      function gotResult(error, results) {
+          console.log(results);
+        // If there is an error
+        if (error) {
+          console.error(error);
+          return;
         }
-    });
-
-</script>
-
-</body>
-</html>
+        // The results are in an array ordered by confidence.
+        // console.log(results[0]);
+        label = results[0].label;
+        // Classifiy again!
+        classifyVideo();
+      }
+    </script>
+    </body>
+    </html>
 {% endblock content %}

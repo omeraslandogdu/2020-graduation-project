@@ -1,0 +1,78 @@
+{% block content %}
+    <html>
+    <head>
+        <title>FaceRecognition</title>
+        <link href="/static/filepond.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style type="text/css">
+            #canvas {
+                height: 500px;
+                width: 100%;
+                background-color: #ddd;
+            }
+        </style>
+    </head>
+    <body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_idType">ID Type</label>
+                        <select name="id_type" id="id_idType" class="form-control">
+                            <option value="default" selected>Default</option>
+                            <option value="origin">Origin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_photo">Photo</label>
+                        <input type="file" name="photo" id="id_photo" multiple>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+    </form>
+
+    <script src="/static/filepond.js"></script>
+    <script src="/static/face-api.min.js"></script>
+    <script>
+        /*
+        var inputElement = document.getElementById('id_photo');
+
+        FilePond.create(inputElement, {
+            server: {
+                process: {
+                    url: '/api/upload/',
+                    ondata: (fd) => {
+                        fd.append('id_type', document.getElementById('id_idType').value);
+
+                        return fd;
+                    }
+                }
+            }
+        });
+         */
+        var MODEL_URL = '/static/models';
+
+        faceapi.loadFaceRecognitionModel(MODEL_URL).then(function () {
+            var input = document.getElementById('myImage');
+            var canvas = document.getElementById('canvas');
+
+            faceapi.detectAllFaces(input).withFaceLandmarks().withFaceDescriptors().then(function (fullFaceDescriptions) {
+                fullFaceDescriptions = faceapi.resizeResults(fullFaceDescriptions);
+
+                faceapi.draw.drawDetections(canvas, fullFaceDescriptions);
+                faceapi.draw.drawLandmarks(canvas, fullFaceDescriptions);
+
+                console.log(fullFaceDescriptions);
+            });
+        });
+    </script>
+
+    </body>
+    </html>
+{% endblock content %}
