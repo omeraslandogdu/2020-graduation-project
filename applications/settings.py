@@ -18,7 +18,7 @@ ROOT_DIR = environ.Path(__file__) - 2
 APPS_DIR = ROOT_DIR.path('applications')
 
 env = environ.Env(DEBUG=(bool, False), )
-environ.Env.read_env(str(ROOT_DIR.path('.env')))
+environ.Env.read_env(str(ROOT_DIR.path('defaultenv')))
 
 STATIC_ROOT = str(ROOT_DIR.path('static'))
 MEDIA_ROOT = str(ROOT_DIR.path('media'))
