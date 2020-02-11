@@ -11,3 +11,7 @@ postgres==2.2.2
 psycopg2-binary==2.8.3
 djangorestframework==3.10.2
 django-environ
+gunicorn
+dj-database-url
+whitenoise
+psycopg2
