@@ -18,7 +18,7 @@ ROOT_DIR = environ.Path(__file__) - 2
 APPS_DIR = ROOT_DIR.path('applications')
 
 env = environ.Env(DEBUG=(bool, False), )
-environ.Env.read_env(str(ROOT_DIR.path('.env')))
+environ.Env.read_env(str(ROOT_DIR.path('defaultenv')))
 
 STATIC_ROOT = str(ROOT_DIR.path('static'))
 MEDIA_ROOT = str(ROOT_DIR.path('media'))
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -165,3 +166,9 @@ MEDIA_URL = 'media/'
 AUTH_USER_MODEL = "recognition.User"
 
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+import dj_database_url
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
