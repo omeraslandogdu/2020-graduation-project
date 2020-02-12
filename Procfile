@@ -1,2 +1,2 @@
-web: gunicorn applications.wsgi --log-file -
-web: python facerecognitionapi/manage.py runserver "0.0.0.0:$PORT"
+web: gunicorn facerecognitionapi.applications.wsgi --log-file -
+web: python manage.py runserver "0.0.0.0:$PORT"

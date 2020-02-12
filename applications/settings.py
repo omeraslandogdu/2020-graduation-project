@@ -16,8 +16,6 @@ import sys
 import environ
 import django_heroku
 
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 ROOT_DIR = environ.Path(__file__) - 2
 APPS_DIR = ROOT_DIR.path('applications')
@@ -126,6 +124,9 @@ DATABASES = {
         'PORT': 5432,
     },
 }
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
