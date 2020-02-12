@@ -1,3 +1,4 @@
+import dj-database-url
 """
 Django settings for applications project.
 
@@ -15,6 +16,8 @@ import sys
 import environ
 import django_heroku
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 ROOT_DIR = environ.Path(__file__) - 2
 APPS_DIR = ROOT_DIR.path('applications')
@@ -171,8 +174,5 @@ AUTH_USER_MODEL = "recognition.User"
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-import dj_database_url
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
 
 django_heroku.settings(locals())
