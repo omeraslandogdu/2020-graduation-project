@@ -1,4 +1,4 @@
-import dj-database-url
+
 """
 Django settings for applications project.
 
@@ -15,6 +15,7 @@ import os
 import sys
 import environ
 import django_heroku
+import dj_database_url
 
 
 ROOT_DIR = environ.Path(__file__) - 2
