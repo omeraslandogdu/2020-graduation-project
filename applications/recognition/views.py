@@ -8,8 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def prediction(request):
     if request.method == 'POST':
-        photo = request.FILES.get('photo')
-
+        #photo = request.FILES.get('photo')
+        pass
+    
     if request.user.admin and request.user.staff:
         return render(request, 'facedetection.html')
     else:

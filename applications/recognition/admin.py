@@ -85,6 +85,13 @@ class UserTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
     )
     change_links = ('entity_type',)
 
+    def get_queryset(self, request):
+        qs = super(UserTypeAdmin, self).get_queryset(request)
+        if request.user.admin:
+            return qs
+
+        return qs.filter(id=request.user.id)
+
 
 @admin.register(EntityType)
 class EntityTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
@@ -97,3 +104,8 @@ class EntityTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
         'status',
     )
     change_links = ('entity_type',)
+
+    def get_queryset(self, request):
+        qs = super(EntityTypeAdmin, self).get_queryset(request)
+        if request.user.admin:
+            return qs
