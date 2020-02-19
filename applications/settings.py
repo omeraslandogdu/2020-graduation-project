@@ -1,3 +1,4 @@
+
 """
 Django settings for applications project.
 
@@ -13,6 +14,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sys
 import environ
+import django_heroku
+import dj_database_url
+
 
 ROOT_DIR = environ.Path(__file__) - 2
 APPS_DIR = ROOT_DIR.path('applications')
@@ -36,7 +40,7 @@ SECRET_KEY = '2p$oqvy#!b44anm53vj(z#74f0ma@^z-n!bgfy3!d7d1oseqng'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = env.str('ALLOWED_HOSTS')
+ALLOWED_HOSTS = [env.str('ALLOWED_HOSTS'), '0.0.0.0', 'localhost',]
 
 
 # Application definition
@@ -122,6 +126,9 @@ DATABASES = {
     },
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -169,6 +176,5 @@ AUTH_USER_MODEL = "recognition.User"
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-import dj_database_url
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+
+django_heroku.settings(locals())

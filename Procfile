@@ -1,1 +1,2 @@
-web: gunicorn djangoherokuapp.wsgi --log-file -
+web: gunicorn facerecognitionapi.applications.wsgi --log-file -
+web: python manage.py runserver "0.0.0.0:$PORT"
