@@ -5,6 +5,7 @@ from applications.recognition.models.entity_type import EntityType
 from django.contrib.auth.admin import UserAdmin
 from .forms import UserAdminChangeForm, UserAdminCreationForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from applications.recognition.models.models import Course, Student
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -109,3 +110,44 @@ class EntityTypeAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
         qs = super(EntityTypeAdmin, self).get_queryset(request)
         if request.user.admin:
             return qs
+
+
+@admin.register(Student)
+class StudentAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'student_id',
+        'phone',
+        'created_at',
+        'updated_at',
+        'status',
+    )
+    change_links = ('user')
+
+    def get_queryset(self, request):
+        qs = super(StudentAdmin, self).get_queryset(request)
+        if request.user.admin:
+            return qs
+        
+        return qs.filter(request.user.id)
+
+
+@admin.register(Course)
+class CourseAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'title',
+        'created_at',
+        'updated_at',
+        'status',
+    )
+    change_links = ('user')
+
+    def get_queryset(self, request):
+        qs = super(CourseAdmin, self).get_queryset(request)
+        if request.user.admin:
+            return qs
+        
+        return qs.filter(request.user.id)
