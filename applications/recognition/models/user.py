@@ -76,33 +76,25 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
     entity_type = models.ForeignKey(EntityType, on_delete=models.DO_NOTHING)
-    # notice the absence of a "Password field", that is built in.
-
 
     objects = ClientManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [] # Email & Password are required by default.
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
 
     def get_full_name(self):
-        # The user is identified by their email address
         return self.email
 
     def get_short_name(self):
-        # The user is identified by their email address
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
         return True
 
     @property
