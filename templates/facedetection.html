@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
     <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript">
         // Classifier Variable
       let classifier;
@@ -64,7 +65,18 @@
 
       // When we get a result
       function gotResult(error, results) {
-          console.log(results);
+        $.ajax(
+        {
+        type:"GET",
+        url: "/prediction",
+        data:{
+                 results: results
+        },
+        success: function( data ) 
+        {
+            //$( '#message' ).text(data);
+        }
+        })
         // If there is an error
         if (error) {
           console.error(error);
