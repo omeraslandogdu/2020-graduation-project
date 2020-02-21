@@ -19,7 +19,7 @@ def prediction(request):
         else:
             pass
 
-    if request.user.is_superuser and request.user.is_staff:
+    if request.user.admin:
         return render(request, 'facedetection.html')
     else:
         raise Http404
