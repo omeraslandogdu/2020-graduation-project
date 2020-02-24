@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def prediction(request):
     if request.method == 'POST':
-        student_name = request.FILES.get('labels')
+        student_name = request.POST.get('data')
         try:
             print(student_name)
         except:
@@ -23,3 +23,4 @@ def prediction(request):
         return render(request, 'facedetection.html')
     else:
         raise Http404
+
