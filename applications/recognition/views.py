@@ -8,7 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def prediction(request):
     if request.method == 'POST':
-        student_name = request.POST.get('data')
+        student_name = request.POST.dict()
+        student_id = student_name['label']
         try:
             print(student_name)
         except:
