@@ -25,3 +25,12 @@ def prediction(request):
     else:
         raise Http404
 
+
+@login_required
+@csrf_exempt
+def yoklama_alma(request):
+    if request.user.admin:
+        return render(request, 'index.html')
+    else:
+        raise Http404
+    
