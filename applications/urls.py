@@ -21,7 +21,7 @@ from django.contrib import admin
 from rest_framework import routers, permissions
 from django.conf import settings
 from django.conf.urls.static import static
-from applications.recognition.views import prediction
+from applications.recognition.views import prediction, yoklama_alma
 
 
 
@@ -33,7 +33,8 @@ urlpatterns = [
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
 
-    url(r'prediction', prediction, name='school_image_upload_view')
+    url(r'prediction', prediction, name='school_image_upload_view'),
+    url(r'yoklama-alma', yoklama_alma, name='school_image_upload_view')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
