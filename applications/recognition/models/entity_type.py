@@ -9,7 +9,7 @@ __all__ = [
 
 class EntityType(BaseModel):
     title = models.CharField(max_length=255)
-    key = models.CharField(max_length=255, db_index=True, )
+    key = models.CharField(max_length=255, db_index=True,)
 
     class Meta:
         ordering = ['title']

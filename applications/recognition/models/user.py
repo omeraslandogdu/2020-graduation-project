@@ -18,7 +18,7 @@ __all__ = [
 
 
 class ClientManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, entity_type, password=None,):
         """
         Creates and saves a User with the given email and password.
         """
@@ -27,6 +27,7 @@ class ClientManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
+            entity_type=entity_type,
         )
 
         user.set_password(password)
@@ -45,16 +46,18 @@ class ClientManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password, entity_type):
         """
         Creates and saves a superuser with the given email and password.
         """
         user = self.create_user(
             email,
             password=password,
+            entity_type=EntityType.objects.get(id=entity_type),
         )
         user.staff = True
         user.admin = True
+        user.active = True
         user.save(using=self._db)
         return user
 
@@ -80,7 +83,7 @@ class User(AbstractBaseUser):
     objects = ClientManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['entity_type',]
 
     def __str__(self):
         return self.email
