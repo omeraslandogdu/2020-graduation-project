@@ -33,8 +33,8 @@ urlpatterns = [
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
 
-    url(r'prediction', prediction, name='school_image_upload_view'),
-    url(r'yoklama-alma', yoklama_alma, name='school_image_upload_view')
+    url(r'prediction', prediction, name='prediction'),
+    url(r'yoklama-alma', yoklama_alma, name='yoklama-alma')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
