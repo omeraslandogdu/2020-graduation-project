@@ -16,6 +16,8 @@ import sys
 import environ
 import django_heroku
 import dj_database_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 ROOT_DIR = environ.Path(__file__) - 2
@@ -38,7 +40,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2p$oqvy#!b44anm53vj(z#74f0ma@^z-n!bgfy3!d7d1oseqng'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [env.str('ALLOWED_HOSTS'), '0.0.0.0', 'localhost',]
 
@@ -179,3 +181,8 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 django_heroku.settings(locals())
+
+sentry_sdk.init(
+    dsn=env.str('SENTRY_DSN'),
+    integrations=[DjangoIntegration()]
+)

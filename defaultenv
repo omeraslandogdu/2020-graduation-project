@@ -1,4 +1,4 @@
-DJANGO_ENV=development
+DJANGO_ENV=production
 DEBUG=on
 SECRET_KEY=abcdefgSecretmecretnerdebizimnecret7102989581xyzhabibi
 
@@ -9,3 +9,4 @@ DEFAULT_DATABASE_PASSWORD=facedetectionapi
 
 ALLOWED_HOSTS=https://finalprojectrecognition.herokuapp.com/
 
+SENTRY_DSN=https://61f5e8d76f144f7ebe84dd453dab49bd@sentry.io/4294111
