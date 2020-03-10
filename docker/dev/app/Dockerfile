@@ -12,6 +12,8 @@ RUN apt-get install -y python3 \
     build-essential \
     libssl-dev \
     libffi-dev \
+    postgresql \
+    postgresql-contrib \
     openssl \
     vim \
     python3-pip \

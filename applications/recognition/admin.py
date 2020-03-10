@@ -137,8 +137,10 @@ class StudentAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
 class CourseAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
     list_display = (
         'id',
-        'user',
+        'code',
         'title',
+        'date',
+        'user',
         'created_at',
         'updated_at',
         'status',
