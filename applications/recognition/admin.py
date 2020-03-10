@@ -24,7 +24,7 @@ class TokenAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(TokenAdmin, self).get_queryset(request)
-        if request.user.admin:
+        if request.user.entity_type == 7:
             return qs
 
         return qs.filter(id=request.user.id)
@@ -57,7 +57,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('email', 'fullname','password1', 'password2', 'entity_type')}
         ),
     )
     search_fields = ('email',)
@@ -137,8 +137,10 @@ class StudentAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
 class CourseAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
     list_display = (
         'id',
-        'user',
+        'code',
         'title',
+        'date',
+        'user',
         'created_at',
         'updated_at',
         'status',

@@ -1,5 +1,5 @@
 from django.db import models
-
+from phone_field import PhoneField
 from applications.core.models import BaseModel
 
 __all__ = [
@@ -9,11 +9,28 @@ __all__ = [
 
 
 class Course(BaseModel):
+    PAZARTESI = 1
+    SALI = 2
+    CARSAMBA = 3
+    PERSEMBE = 4
+    CUMA = 5
+
+    DAY_CHOICES = (
+        (PAZARTESI, 'PAZARTESI'),
+        (SALI, 'SALI'),
+        (CARSAMBA, 'CARSAMBA'),
+        (PERSEMBE, 'PERSEMBE'),
+        (CUMA, 'CUMA'),
+    )
+
     title = models.CharField(max_length=255)
     user = models.ForeignKey('User', models.DO_NOTHING)
+    code = models.CharField(max_length=8, default=None)
+    date = models.IntegerField(choices=DAY_CHOICES, default=PAZARTESI, )
+
 
     class Meta:
-        ordering = ['title']
+        ordering = ['code']
 
     def __str__(self):
         return self.title
@@ -21,8 +38,8 @@ class Course(BaseModel):
 
 class Student(BaseModel):
     user = models.ForeignKey('User', models.DO_NOTHING)
-    student_id = models.IntegerField()
-    phone = models.IntegerField()
+    student_id = models.CharField(max_length=9)
+    phone = PhoneField(blank=True, help_text='Contact phone number')
     
     class Meta:
         verbose_name = 'Student'
