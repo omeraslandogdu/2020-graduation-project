@@ -1,5 +1,5 @@
 from django.db import models
-
+from phone_field import PhoneField
 from applications.core.models import BaseModel
 
 __all__ = [
@@ -38,8 +38,8 @@ class Course(BaseModel):
 
 class Student(BaseModel):
     user = models.ForeignKey('User', models.DO_NOTHING)
-    student_id = models.IntegerField()
-    phone = models.IntegerField()
+    student_id = models.CharField(max_length=9)
+    phone = PhoneField(blank=True, help_text='Contact phone number')
     
     class Meta:
         verbose_name = 'Student'
