@@ -1,16 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
+from applications.recognition.models.entity_type import EntityType
 from .models import User
 
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    entity_type = forms.ChoiceField(choices=EntityType.objects.all(), required=False)
 
     class Meta:
         model = User
-        fields = ('email',)
+        fields = '__all__'
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -35,6 +36,7 @@ class UserAdminCreationForm(forms.ModelForm):
     """
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    entity_type = forms.ModelChoiceField(label='Entity Type', queryset=EntityType.objects.all(), required=True)
 
     class Meta:
         model = User
@@ -66,7 +68,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'active', 'admin')
+        fields = ('email', 'password', 'active', 'admin', 'entity_type')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
