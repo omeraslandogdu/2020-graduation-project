@@ -163,10 +163,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-sentry_sdk.init(
-    dsn=env.str('SENTRY_DSN'),
-    integrations=[DjangoIntegration()]
-)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
