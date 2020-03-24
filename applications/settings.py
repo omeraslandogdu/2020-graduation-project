@@ -16,8 +16,6 @@ import sys
 import environ
 import django_heroku
 import dj_database_url
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
 
 ROOT_DIR = environ.Path(__file__) - 2
