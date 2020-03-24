@@ -16,8 +16,6 @@ import sys
 import environ
 import django_heroku
 import dj_database_url
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
 
 ROOT_DIR = environ.Path(__file__) - 2
@@ -182,7 +180,3 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
 
-sentry_sdk.init(
-    dsn=env.str('SENTRY_DSN'),
-    integrations=[DjangoIntegration()]
-)
