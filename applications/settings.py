@@ -14,8 +14,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sys
 import environ
-import django_heroku
-import dj_database_url
+#import django_heroku
+#import dj_database_url
 
 
 ROOT_DIR = environ.Path(__file__) - 2
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,8 +127,8 @@ DATABASES = {
     },
 }
 
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+#db_from_env = dj_database_url.config()
+#DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -174,9 +174,9 @@ MEDIA_URL = 'media/'
 AUTH_USER_MODEL = "recognition.User"
 
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 

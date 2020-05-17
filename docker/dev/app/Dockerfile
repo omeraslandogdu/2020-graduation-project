@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY /requirements.txt /tmp/requirements.txt
+COPY . /app
 
 RUN apt-get  update
 RUN apt-get install -y python3 \
@@ -14,6 +14,8 @@ RUN apt-get install -y python3 \
     libffi-dev \
     postgresql \
     postgresql-contrib \
+    python3-psycopg2 \
+    libpq-dev \
     openssl \
     vim \
     python3-pip \
@@ -30,7 +32,7 @@ ENV LANGUAGE en_US:en
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python3 get-pip.py pip==19.3.1
 
-RUN pip install -r /tmp/requirements.txt
+RUN pip install -r requirements.txt
 
 RUN ln -s /usr/bin/python3  /usr/bin/python
 RUN ln -s /usr/bin/pip3  /usr/bin/pip

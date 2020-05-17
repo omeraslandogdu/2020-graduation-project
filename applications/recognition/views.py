@@ -30,17 +30,17 @@ def prediction(request):
 @csrf_exempt
 def yoklama_alma(request):
     if request.method == 'POST':
-        student_name = request.POST.dict()
-        student_id = student_name['label']
+        data = request.POST.dict()
+        student_id = data['personId']
+        confidentce = data['personConf']
+        """teacher_id =  data['teacherId']
+        teacher_mail = data['teacherMail']"""
+
         try:
-            print(student_name)
+            print(type(student_id), type(confidentce))
         except:
             pass
 
-        if request.POST.get('id_type') == 'origin':
-            pass
-        else:
-            pass
 
     if request.user.admin:
         return render(request, 'index.html')

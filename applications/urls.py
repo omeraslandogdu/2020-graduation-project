@@ -34,7 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     url(r'prediction', prediction, name='prediction'),
-    url(r'yoklama-alma', yoklama_alma, name='yoklama-alma')
+    url(r'yoklama-alma', yoklama_alma, name='yoklama_alma')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
