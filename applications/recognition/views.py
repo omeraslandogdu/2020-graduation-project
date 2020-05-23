@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from applications.recognition.models.user import Attendance, User
+
 from django.http import Http404
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-
 
 @login_required
 @csrf_exempt
@@ -33,6 +34,14 @@ def yoklama_alma(request):
         data = request.POST.dict()
         student_id = data['personId']
         confidentce = data['personConf']
+
+        user = User.objects.filter(id = student_id)
+        try:
+            attendance = Attendance(user=user, conf=confidentce)
+            attendance.save()
+
+        except Exception as e:
+            pass
         """teacher_id =  data['teacherId']
         teacher_mail = data['teacherMail']"""
 

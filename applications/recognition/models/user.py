@@ -129,6 +129,11 @@ class UserType(BaseModel):
         return self.title
 
 
+class Attendance(models.Model):
+    user = models.ForeignKey('User', on_delete=models.DO_NOTHING)
+    conf = models.CharField(max_length=255)
+
+
 
 
 
