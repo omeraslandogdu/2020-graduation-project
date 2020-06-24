@@ -6,6 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import UserAdminChangeForm, UserAdminCreationForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from applications.recognition.models.models import Course, Student
+from applications.recognition.models.user import Attendance
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -153,3 +154,8 @@ class CourseAdmin(RelatedObjectLinkMixin, BaseModelAdmin):
             return qs
         
         return qs.filter(request.user.id)
+
+
+@admin.register(Attendance)
+class AttandanceAdmin(admin.ModelAdmin):
+    list_display = ('user', 'conf')

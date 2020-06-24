@@ -34,21 +34,12 @@ def yoklama_alma(request):
         data = request.POST.dict()
         student_id = data['personId']
         confidentce = data['personConf']
-
-        user = User.objects.filter(id = student_id)
-        try:
-            attendance = Attendance(user=user, conf=confidentce)
-            attendance.save()
-
-        except Exception as e:
-            pass
-        """teacher_id =  data['teacherId']
-        teacher_mail = data['teacherMail']"""
-
-        try:
-            print(type(student_id), type(confidentce))
-        except:
-            pass
+        if float(confidentce) > 0.90:
+            try:
+                attendance = Attendance(user=student_id, conf=confidentce)
+                attendance.save()
+            except Exception as e:
+                pass
 
 
     if request.user.admin:

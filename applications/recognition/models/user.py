@@ -130,7 +130,7 @@ class UserType(BaseModel):
 
 
 class Attendance(models.Model):
-    user = models.ForeignKey('User', on_delete=models.DO_NOTHING)
+    user = models.CharField(max_length=255)
     conf = models.CharField(max_length=255)
 
 
