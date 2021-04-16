@@ -4,7 +4,7 @@ Werkzeug==0.12.2
 django-jet==1.0.8
 drf-yasg==1.12.1
 django-extensions==1.9.7
-django-debug-toolbar==1.9.1
+django-debug-toolbar==1.11.1
 django-rest-auth
 django-location-field
 postgres==2.2.2
